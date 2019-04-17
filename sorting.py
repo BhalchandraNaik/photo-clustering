@@ -10,6 +10,7 @@ from sklearn.cluster import DBSCAN
 def make_hashes(paths, hash_method=imagehash.whash):
     img_names, img_hashes = [], []
     for path in paths:
+        print(path)
         image = Image.open(path)
         img_hash = hash_method(image)
         img_hashes.append(img_hash)
@@ -34,14 +35,13 @@ def cluster(mat, fnames, eps, min_samples):
         clusters[lbl].append(fnames[i])
     return clusters
 
-
-dirname = './data/tmp/*'
-print('Reading Files...')
-paths = get_file_paths(dirname)
-print('Computing Hashes...')
-paths, img_hashes = make_hashes(paths)
-print('Computing Distances...')
-dist_mat = compute_dists(img_hashes)
-print('Clustering...')
-clusters = cluster(dist_mat, paths, 20, 2)
-print(clusters)
+def clusterMain(dirname):
+    print('Reading Files...')
+    paths = get_file_paths(dirname)
+    print('Computing Hashes...')
+    paths, img_hashes = make_hashes(paths)
+    print('Computing Distances...')
+    dist_mat = compute_dists(img_hashes)
+    print('Clustering...')
+    clusters = cluster(dist_mat, paths, 18, 1)
+    return clusters
